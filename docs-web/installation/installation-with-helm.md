@@ -52,7 +52,7 @@ This document describes how to install the NGINX Ingress Controller in your Kube
 1. Clone the Ingress controller repo:
     ```console
     $ git clone https://github.com/nginxinc/kubernetes-ingress/
-    $ git checkout v1.6.0
+    $ git checkout v1.6.1
     ```
 2. Change your working directory to /deployments/helm-chart:
     ```console
@@ -142,7 +142,7 @@ The following tables lists the configurable parameters of the NGINX Ingress cont
      - nginx/nginx-ingress
    * - ``controller.image.tag``
      - The tag of the Ingress controller image.
-     - 1.6.0
+     - 1.6.1
    * - ``controller.image.pullPolicy``
      - The pull policy for the Ingress controller image.
      - IfNotPresent
