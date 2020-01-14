@@ -25,15 +25,29 @@ This chart deploys the NGINX Ingress controller in your Kubernetes cluster.
 
 2. To install the chart with the release name my-release (my-release is the name that you choose):
 
-    For NGINX:
-    ```
-    $ helm install nginx-stable/nginx-ingress --name my-release
-    ```
+    * Using Helm 3.x client:
 
-    For NGINX Plus (assuming you have pushed the Ingress controller image `nginx-plus-ingress` to your private registry `myregistry.example.com`):
-    ```
-    $ helm install nginx-stable/nginx-ingress --name my-release --set controller.image.repository=myregistry.example.com/nginx-plus-ingress --set controller.nginxplus=true
-    ```
+        For NGINX:
+        ```console
+        $ helm install my-release nginx-stable/nginx-ingress
+        ```
+
+        For NGINX Plus: (assuming you have pushed the Ingress controller image `nginx-plus-ingress` to your private registry `myregistry.example.com`)
+        ```console
+        $ helm install my-release nginx-stable/nginx-ingress --set controller.image.repository=myregistry.example.com/nginx-plus-ingress --set controller.nginxplus=true
+        ```
+
+    * Using Helm 2.x client:
+
+        For NGINX:
+        ```console
+        $ helm install --name my-release nginx-stable/nginx-ingress
+        ```
+
+        For NGINX Plus: (assuming you have pushed the Ingress controller image `nginx-plus-ingress` to your private registry `myregistry.example.com`)
+        ```console
+        $ helm install --name my-release nginx-stable/nginx-ingress --set controller.image.repository=myregistry.example.com/nginx-plus-ingress --set controller.nginxplus=true
+        ```
 
 ### Installing Using Chart Sources
 
@@ -48,15 +62,29 @@ This chart deploys the NGINX Ingress controller in your Kubernetes cluster.
     ```
 3. To install the chart with the release name my-release (my-release is the name that you choose):
 
-    For NGINX:
-    ```console
-    $ helm install --name my-release .
-    ```
+    * Using Helm 3.x client:
 
-    For NGINX Plus:
-    ```console
-    $ helm install --name my-release -f values-plus.yaml .
-    ```
+        For NGINX:
+        ```console
+        $ helm install my-release .
+        ```
+
+        For NGINX Plus:
+        ```console
+        $ helm install my-release -f values-plus.yaml .
+        ```
+
+    * Using Helm 2.x client:
+
+        For NGINX:
+        ```console
+        $ helm install --name my-release .
+        ```
+
+        For NGINX Plus:
+        ```console
+        $ helm install --name my-release -f values-plus.yaml .
+        ```
 
     The command deploys the Ingress controller in your Kubernetes cluster in the default configuration. The configuration section lists the parameters that can be configured during installation.
 
@@ -68,9 +96,17 @@ This chart deploys the NGINX Ingress controller in your Kubernetes cluster.
 
 To uninstall/delete the release `my-release`
 
-```console
-$ helm delete my-release
-```
+* Using Helm 3.x client:
+
+    ```console
+    $ helm uninstall my-release
+    ```
+
+* Using Helm 2.x client:
+
+    ```console
+    $ helm delete my-release
+    ```
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
 
@@ -94,7 +130,7 @@ Parameter | Description | Default
 `controller.customPorts` | A list of custom ports to expose on the NGINX ingress controller pod. Follows the conventional Kubernetes yaml syntax for container ports. | []
 `controller.defaultTLS.cert` | The base64-encoded TLS certificate for the default HTTPS server. If not specified, a pre-generated self-signed certificate is used. **Note:** It is recommended that you specify your own certificate. | A pre-generated self-signed certificate.
 `controller.defaultTLS.key` | The base64-encoded TLS key for the default HTTPS server. **Note:** If not specified, a pre-generated key is used. It is recommended that you specify your own key. | A pre-generated key.
-`controller.defaultTLS.secret` | The secret with a TLS certificate and key for the default HTTPS server. The value must follow the following format: `<namespace>/<name>`. Used as an alternative to specifiying a certifcate and key using `controller.defaultTLS.cert` and `controller.defaultTLS.key` parameters. | None
+`controller.defaultTLS.secret` | The secret with a TLS certificate and key for the default HTTPS server. The value must follow the following format: `<namespace>/<name>`. Used as an alternative to specifying a certificate and key using `controller.defaultTLS.cert` and `controller.defaultTLS.key` parameters. | None
 `controller.wildcardTLS.cert` | The base64-encoded TLS certificate for every Ingress host that has TLS enabled but no secret specified. If the parameter is not set, for such Ingress hosts NGINX will break any attempt to establish a TLS connection. | None
 `controller.wildcardTLS.key` | The base64-encoded TLS key for every Ingress host that has TLS enabled but no secret specified. If the parameter is not set, for such Ingress hosts NGINX will break any attempt to establish a TLS connection. | None
 `controller.wildcardTLS.secret` | The secret with a TLS certificate and key for every Ingress host that has TLS enabled but no secret specified. The value must follow the following format: `<namespace>/<name>`. Used as an alternative to specifying a certificate and key using `controller.wildcardTLS.cert` and `controller.wildcardTLS.key` parameters. | None
@@ -145,7 +181,7 @@ Parameter | Description | Default
 Example:
 ```console
 $ cd kubernetes-ingress/helm-chart
-$ helm install --name my-release . --set controller.replicaCount=5
+$ helm install my-release . --set controller.replicaCount=5
 ```
 
 ## Notes
