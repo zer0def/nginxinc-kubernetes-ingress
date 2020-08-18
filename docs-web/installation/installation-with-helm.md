@@ -18,11 +18,11 @@ This step is required if you're installing the chart using its sources. Addition
 1. Clone the Ingress controller repo:
     ```console
     $ git clone https://github.com/nginxinc/kubernetes-ingress/
-    $ git checkout v1.8.0
     ```
 2. Change your working directory to /deployments/helm-chart:
     ```console
     $ cd kubernetes-ingress/deployments/helm-chart
+    $ git checkout v1.8.1
     ```
 
 ## Adding the Helm Repository
@@ -219,7 +219,7 @@ The following tables lists the configurable parameters of the NGINX Ingress cont
      - nginx/nginx-ingress
    * - ``controller.image.tag``
      - The tag of the Ingress controller image.
-     - 1.8.0
+     - 1.8.1
    * - ``controller.image.pullPolicy``
      - The pull policy for the Ingress controller image.
      - IfNotPresent
