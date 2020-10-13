@@ -34,7 +34,7 @@ Run the tests:
     $ make build
     $ make run-tests NODE_IP=$(minikube ip)
     ```
-The tests will use the Ingress Controller for NGINX with the default *nginx/nginx-ingress:edge* image. See the section below to learn how to configure the tests including the image and the type of NGINX -- NGINX or NGINX Plus.
+The tests will use the Ingress Controller for NGINX with the default *nginx/nginx-ingress:1.9.0* image. See the section below to learn how to configure the tests including the image and the type of NGINX -- NGINX or NGINX Plus.
 
 ## Configuring the Tests
 
@@ -44,7 +44,7 @@ The table below shows various configuration options for the tests. If you use Py
 | Command-line Argument | Makefile Variable | Description | Default |
 | :----------------------- | :------------ | :------------ | :----------------------- |
 | `--context` | `CONTEXT` | The context to use in the kubeconfig file. | `""` |
-| `--image` | `BUILD_IMAGE` | The Ingress Controller image. | `nginx/nginx-ingress:edge` |
+| `--image` | `BUILD_IMAGE` | The Ingress Controller image. | `nginx/nginx-ingress:1.9.0` |
 | `--image-pull-policy` | `PULL_POLICY` | The pull policy of the Ingress Controller image. | `IfNotPresent` |
 | `--deployment-type` | `DEPLOYMENT_TYPE` | The type of the IC deployment: deployment or daemon-set. | `deployment` |
 | `--ic-type` | `IC_TYPE` | The type of the Ingress Controller: nginx-ingress or nginx-ingress-plus. | `nginx-ingress` |

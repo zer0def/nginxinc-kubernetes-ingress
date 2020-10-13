@@ -40,7 +40,7 @@ The table below shows various configuration options for the performance tests. U
 | Command-line Argument | Description | Default |
 | :----------------------- | :------------ | :----------------------- |
 | `--context` | The context to use in the kubeconfig file. | `""` |
-| `--image` | The Ingress Controller image. | `nginx/nginx-ingress:edge` |
+| `--image` | The Ingress Controller image. | `nginx/nginx-ingress:1.9.0` |
 | `--image-pull-policy` | The pull policy of the Ingress Controller image. | `IfNotPresent` |
 | `--deployment-type` | The type of the IC deployment: deployment or daemon-set. | `deployment` |
 | `--ic-type` | The type of the Ingress Controller: nginx-ingress or nginx-ingress-plus. | `nginx-ingress` |
