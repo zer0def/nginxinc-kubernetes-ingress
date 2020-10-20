@@ -51,7 +51,7 @@ jobs:
           echo "::set-output name=sha::${SHA}"
           echo "::set-output name=repo::${GITHUB_REPOSITORY#*/}"
           echo "::set-output name=branch::${GITHUB_REF##*/}"
-          echo "::set-output name=helmChartVersion::$(helm show chart ${HELM_CHART_DIR} | grep 'version:' | cut -d ' ' -f 2)"
+          echo "::set-output name=helmChartVersion::$(helm show chart ${{ env.HELM_CHART_DIR }} | grep 'version:' | cut -d ' ' -f 2)"
       - name: Build Binary
         run: >
           make binary
