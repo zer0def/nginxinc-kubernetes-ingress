@@ -51,6 +51,7 @@ jobs:
           echo "::set-output name=sha::${SHA}"
           echo "::set-output name=repo::${GITHUB_REPOSITORY#*/}"
           echo "::set-output name=branch::${GITHUB_REF##*/}"
+          echo "::set-output name=helmChartVersion::$(helm show chart ${HELM_CHART_DIR} | grep 'version:' | cut -d ' ' -f 2)"
       - name: Build Binary
         run: >
           make binary
@@ -185,7 +186,7 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
           target: ${{ matrix.target }}
-          tags: ${{ env.DOCKER_IMAGE }}/${{ needs.binary.outputs.version }}
+          tags: ${{ env.DOCKER_IMAGE }}:${{ needs.binary.outputs.version }}
 
   smoke-tests:
     name: Smoke Tests
@@ -577,12 +578,12 @@ jobs:
       - name: Lint
         run: helm lint ${{ env.HELM_CHART_DIR }}
       - name: Package
-        run: helm package --version ${{ needs.binary.outputs.version }} ${{ env.HELM_CHART_DIR }}
+        run: helm package --version ${{ needs.binary.outputs.helmChartVersion }} ${{ env.HELM_CHART_DIR }}
       - name: Upload Chart
         uses: actions/upload-artifact@v2
         with:
           name: helm-chart
-          path: ${{ github.workspace }}/nginx-ingress-${{ needs.binary.outputs.version }}.tgz
+          path: ${{ github.workspace }}/nginx-ingress-${{ needs.binary.outputs.helmChartVersion }}.tgz
 
   release-helm:
     name: Release Helm Chart
@@ -597,7 +598,7 @@ jobs:
           fetch-depth: 1
           token: ${{ secrets.NGINX_PAT }}
       - name: Remove previous Chart
-        run: rm -f ${{ github.workspace }}/stable/nginx-ingress-${{ needs.binary.outputs.version }}.tgz
+        run: rm -f ${{ github.workspace }}/stable/nginx-ingress-${{ needs.binary.outputs.helmChartVersion }}.tgz
       - name: Retrieve latest Helm Chart
         uses: actions/download-artifact@v2
         with:
