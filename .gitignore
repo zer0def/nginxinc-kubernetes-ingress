@@ -57,3 +57,7 @@ dist/
 
 # trivy container scanning cache
 .trivycache/
+
+node_modules
+package-lock.json
+package.json

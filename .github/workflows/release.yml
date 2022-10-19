@@ -203,7 +203,7 @@ jobs:
   notify:
     name: Notify
     runs-on: ubuntu-20.04
-    needs: publish-release-notes
+    needs: release-helm
     if: always()
     steps:
       - name: Workflow Status
