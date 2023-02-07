@@ -507,7 +507,8 @@
                   "type": "string",
                   "enum": [
                     "Recreate",
-                    "RollingUpdate"
+                    "RollingUpdate",
+                    "OnDelete"
                   ]
                 }
               }
