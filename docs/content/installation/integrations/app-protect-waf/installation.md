@@ -23,7 +23,7 @@ You can also [install the Ingress Controller with App Protect WAF by using Helm]
 2. Clone the Ingress Controller repo:
 
     ```console
-    git clone https://github.com/nginxinc/kubernetes-ingress.git --branch v3.3.2
+    git clone https://github.com/nginxinc/kubernetes-ingress.git --branch v3.4.0
     cd kubernetes-ingress
     ```
 
@@ -90,4 +90,4 @@ Take the steps below to set up and deploy the NGINX Ingress Controller and App P
 
 4. [Deploy the Ingress Controller]({{< relref "installation/installing-nic/installation-with-manifests.md#deploy-ingress-controller" >}}).
 
-For more information, see the [Configuration guide]({{< relref "installation/integrations/app-protect-waf/configuration.md" >}}) and the NGINX Ingress Controller with App Protect example resources on GitHub [for VirtualServer resources](https://github.com/nginxinc/kubernetes-ingress/tree/v3.3.2/examples/custom-resources/app-protect-waf) and [for Ingress resources](https://github.com/nginxinc/kubernetes-ingress/tree/v3.3.2/examples/ingress-resources/app-protect-waf" >}}).
+For more information, see the [Configuration guide]({{< relref "installation/integrations/app-protect-waf/configuration.md" >}}) and the NGINX Ingress Controller with App Protect example resources on GitHub [for VirtualServer resources](https://github.com/nginxinc/kubernetes-ingress/tree/v3.4.0/examples/custom-resources/app-protect-waf) and [for Ingress resources](https://github.com/nginxinc/kubernetes-ingress/tree/v3.4.0/examples/ingress-resources/app-protect-waf" >}}).
