@@ -6,13 +6,13 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 
 ############################################# Base images containing libs for Opentracing and FIPS #############################################
-FROM opentracing/nginx-opentracing:nginx-1.25.3@sha256:2e0268d3cd31fe047c2fe566f29731865b0c99cc99b579c6584b23cd3c7830ef as opentracing-lib
-FROM opentracing/nginx-opentracing:nginx-1.25.3-alpine@sha256:08ccc2c8bb28f01cb17b7619f139830b3af7950826b819b267393aefa32f23ab as alpine-opentracing-lib
+FROM opentracing/nginx-opentracing:nginx-1.25.3@sha256:2217e9fa36a2130d395a40bb051965cf64c9d10087281e301e9c0b60ce2a1a57 as opentracing-lib
+FROM opentracing/nginx-opentracing:nginx-1.25.3-alpine@sha256:37c7de3a46ca05428450b1c64bfb2a4d2f9c1835860cef427928fcf11c178f0e as alpine-opentracing-lib
 FROM ghcr.io/nginxinc/alpine-fips:0.1.1-alpine3.18@sha256:6f124002650fae697152290a14a7caa7f21884e8d78d8236c63fec2d018d721d as alpine-fips
 
 
 ############################################# Base image for Alpine #############################################
-FROM nginx:1.25.3-alpine@sha256:156d75f07c59b2fd59d3d1470631777943bb574135214f0a90c7bb82bde916da AS alpine
+FROM nginx:1.25.3-alpine@sha256:f2802c2a9d09c7aa3ace27445dfc5656ff24355da28e7b958074a0111e3fc076 AS alpine
 
 RUN --mount=type=bind,from=alpine-opentracing-lib,target=/tmp/ot/ \
 	apk add --no-cache libcap libstdc++ \
@@ -24,7 +24,7 @@ RUN --mount=type=bind,from=alpine-opentracing-lib,target=/tmp/ot/ \
 
 
 ############################################# Base image for Debian #############################################
-FROM nginx:1.25.3@sha256:8b4c32060a41e8c07e4b33c2e2695510c729314d84b2b71a1c5d7002aaf0b5ad AS debian
+FROM nginx:1.25.3@sha256:84c52dfd55c467e12ef85cad6a252c0990564f03c4850799bf41dd738738691f AS debian
 
 RUN --mount=type=bind,from=opentracing-lib,target=/tmp/ot/ \
 	apt-get update \
@@ -208,7 +208,7 @@ RUN --mount=type=secret,id=nginx-repo.crt,dst=/etc/ssl/nginx/nginx-repo.crt,mode
 
 
 ############################################# Base image for UBI with NGINX Plus and App Protect WAF/DoS #############################################
-FROM redhat/ubi8@sha256:23d8dfd08024fdfa34b168c297d8c74a1dc58675b02b3418925932df123b755c as ubi-plus-nap
+FROM redhat/ubi8@sha256:627867e53ad6846afba2dfbf5cef1d54c868a9025633ef0afd546278d4654eac as ubi-plus-nap
 ARG NAP_MODULES
 
 RUN --mount=type=secret,id=nginx-repo.crt,dst=/etc/ssl/nginx/nginx-repo.crt,mode=0644 \
