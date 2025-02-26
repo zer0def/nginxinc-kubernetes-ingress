@@ -13,29 +13,6 @@ import (
 	nl "github.com/nginx/kubernetes-ingress/internal/logger"
 )
 
-func shellOut(l *slog.Logger, cmd string) (err error) {
-	var stdout bytes.Buffer
-	var stderr bytes.Buffer
-
-	nl.Debugf(l, "executing %s", cmd)
-
-	command := exec.Command("sh", "-c", cmd)
-	command.Stdout = &stdout
-	command.Stderr = &stderr
-
-	err = command.Start()
-	if err != nil {
-		return fmt.Errorf("failed to execute %v, err: %w", cmd, err)
-	}
-
-	err = command.Wait()
-	if err != nil {
-		return fmt.Errorf("command %v stdout: %q\nstderr: %q\nfinished with error: %w", cmd,
-			stdout.String(), stderr.String(), err)
-	}
-	return nil
-}
-
 // nginxTestError runs 'nginx -t' and returns a clean, single-line error
 // extracted from stderr. It strips the redundant "nginx: configuration file ... test failed"
 // summary line and joins remaining lines with "; ".

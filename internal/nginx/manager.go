@@ -12,6 +12,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"syscall"
 	"time"
 
 	"github.com/nginx/kubernetes-ingress/internal/metadata"
@@ -368,7 +369,7 @@ func (lm *LocalManager) Reload(isEndpointsUpdate bool) error {
 	t1 := time.Now()
 
 	binaryFilename := getBinaryFileName(lm.debug)
-	if err := shellOut(lm.logger, fmt.Sprintf("%v -s %v -e stderr", binaryFilename, "reload")); err != nil {
+	if _, err := exec.Command(binaryFilename, "-s", "reload", "-e", "stderr").CombinedOutput(); err != nil {  // kill -HUP
 		lm.metricsCollector.IncNginxReloadErrors()
 		return fmt.Errorf("nginx reload failed: %w", err)
 	}
@@ -400,7 +401,7 @@ func (lm *LocalManager) Quit() {
 	}
 
 	binaryFilename := getBinaryFileName(lm.debug)
-	if err := shellOut(lm.logger, fmt.Sprintf("%v -s %v", binaryFilename, "quit")); err != nil {
+	if _, err := exec.Command(binaryFilename, "-s", "quit").CombinedOutput(); err != nil {  // kill -QUIT
 		nl.Fatalf(lm.logger, "Failed to quit nginx: %v", err)
 	}
 }
@@ -581,8 +582,7 @@ func (lm *LocalManager) AppProtectPluginStart(appDone chan error, logLevel strin
 // AppProtectPluginQuit gracefully ends AppProtect Agent.
 func (lm *LocalManager) AppProtectPluginQuit() {
 	nl.Debugf(lm.logger, "Quitting AppProtect Plugin")
-	killcmd := fmt.Sprintf("kill %d", lm.appProtectPluginPid)
-	if err := shellOut(lm.logger, killcmd); err != nil {
+	if err := syscall.Kill(lm.appProtectPluginPid, syscall.SIGTERM); err != nil {  // kill -TERM/INT
 		nl.Fatalf(lm.logger, "Failed to quit AppProtect Plugin: %v", err)
 	}
 }
@@ -614,8 +614,7 @@ func (lm *LocalManager) IPRepdQuit() {
 		return
 	}
 	nl.Debugf(lm.logger, "Quitting iprepd")
-	killcmd := fmt.Sprintf("kill %d", lm.ipRepdPid)
-	if err := shellOut(lm.logger, killcmd); err != nil {
+	if err := syscall.Kill(lm.ipRepdPid, syscall.SIGTERM); err != nil { // kill -TERM/INT
 		nl.Fatalf(lm.logger, "Failed to quit iprepd: %v", err)
 	}
 }
@@ -623,8 +622,7 @@ func (lm *LocalManager) IPRepdQuit() {
 // AppProtectDosAgentQuit gracefully ends AppProtect Agent.
 func (lm *LocalManager) AppProtectDosAgentQuit() {
 	nl.Debugf(lm.logger, "Quitting AppProtectDos Agent")
-	killcmd := fmt.Sprintf("kill %d", lm.appProtectDosAgentPid)
-	if err := shellOut(lm.logger, killcmd); err != nil {
+	if err := syscall.Kill(lm.appProtectDosAgentPid, syscall.SIGTERM); err != nil {  // kill -TERM/INT
 		nl.Fatalf(lm.logger, "Failed to quit AppProtect Agent: %v", err)
 	}
 }
@@ -724,8 +722,7 @@ func (lm *LocalManager) AgentStart(agentDone chan error, instanceGroup string) {
 // AgentQuit gracefully ends AppProtect Agent.
 func (lm *LocalManager) AgentQuit() {
 	nl.Debugf(lm.logger, "Quitting Agent")
-	killcmd := fmt.Sprintf("kill %d", lm.agentPid)
-	if err := shellOut(lm.logger, killcmd); err != nil {
+	if err := syscall.Kill(lm.agentPid, syscall.SIGTERM); err != nil {  // kill -TERM/INT
 		nl.Fatalf(lm.logger, "Failed to quit Agent: %v", err)
 	}
 }
