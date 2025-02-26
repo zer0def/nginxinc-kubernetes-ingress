@@ -1,38 +1,13 @@
 package nginx
 
 import (
-	"bytes"
 	"fmt"
 	"log/slog"
 	"os"
-	"os/exec"
 	"path"
 
 	nl "github.com/nginx/kubernetes-ingress/internal/logger"
 )
-
-func shellOut(l *slog.Logger, cmd string) (err error) {
-	var stdout bytes.Buffer
-	var stderr bytes.Buffer
-
-	nl.Debugf(l, "executing %s", cmd)
-
-	command := exec.Command("sh", "-c", cmd)
-	command.Stdout = &stdout
-	command.Stderr = &stderr
-
-	err = command.Start()
-	if err != nil {
-		return fmt.Errorf("failed to execute %v, err: %w", cmd, err)
-	}
-
-	err = command.Wait()
-	if err != nil {
-		return fmt.Errorf("command %v stdout: %q\nstderr: %q\nfinished with error: %w", cmd,
-			stdout.String(), stderr.String(), err)
-	}
-	return nil
-}
 
 func createFileAndWrite(name string, b []byte) error {
 	w, err := os.Create(name)
