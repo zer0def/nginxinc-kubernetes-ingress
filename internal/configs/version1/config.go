@@ -177,6 +177,7 @@ type Location struct {
 	ClientMaxBodySize    string
 	Websocket            bool
 	Rewrite              string
+	RewriteTarget        string
 	SSL                  bool
 	GRPC                 bool
 	ProxyBuffering       bool
