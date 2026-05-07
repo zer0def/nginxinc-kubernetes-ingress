@@ -167,7 +167,7 @@ jobs:
 
   #     - name: Generate Assertion Document
   #       id: assertiondoc
-  #       uses: nginxinc/compliance-rules/.github/actions/assertion@83e452166aaf0ad8f07caf91a4f1f903b3dea1e6 # v0.3.0
+  #       uses: nginx/compliance-rules/.github/actions/assertion@83e452166aaf0ad8f07caf91a4f1f903b3dea1e6 # v0.3.0
   #       with:
   #         artifact-name: "${{ github.event.repository.name }}_${{ github.sha }}_${{ github.run_number }}_${{ matrix.nic.os }}_${{ matrix.nic.arch }}"
   #         artifact-digest: ${{ steps.godeps.outputs.artifact_digest }}
@@ -186,7 +186,7 @@ jobs:
 
   #     - name: Sign and Store Assertion Document
   #       id: sign
-  #       uses: nginxinc/compliance-rules/.github/actions/sign@83e452166aaf0ad8f07caf91a4f1f903b3dea1e6 # v0.3.0
+  #       uses: nginx/compliance-rules/.github/actions/sign@83e452166aaf0ad8f07caf91a4f1f903b3dea1e6 # v0.3.0
   #       with:
   #         assertion-doc: ${{ steps.assertiondoc.outputs.assertion-document-path }}
 
