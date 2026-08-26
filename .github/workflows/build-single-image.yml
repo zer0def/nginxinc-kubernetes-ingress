@@ -21,9 +21,29 @@ on:
         required: false
         type: string
         default: main
+      oss_repo:
+        description: "Repo to source NGINX OSS packages from"
+        default: "packages.nginx.org"
+        type: choice
+        options:
+          - packages.nginx.org
+          - pkgs-test.nginx.com
       plus_repo:
-        description: 'Plus repo to install from'
-        required: true
+        description: 'Repo to source NGINX Plus packages from'
+        default: 'pkgs.nginx.com'
+        type: choice
+        options:
+          - pkgs.nginx.com
+          - pkgs-test.nginx.com
+      waf_repo:
+        description: 'Repo to source NGINX Plus packages from'
+        default: 'pkgs.nginx.com'
+        type: choice
+        options:
+          - pkgs.nginx.com
+          - pkgs-test.nginx.com
+      dos_repo:
+        description: 'Repo to source NGINX Plus packages from'
         default: 'pkgs.nginx.com'
         type: choice
         options:
@@ -136,7 +156,10 @@ jobs:
           REGISTRY: gcr.io/f5-gcs-7899-ptg-ingrss-ctlr/dev
           PREFIX: ${{ inputs.prefix }}
           TAG: ${{ inputs.tag }}
+          OSS_REPO: ${{ inputs.oss_repo }}
           PLUS_REPO: ${{ inputs.plus_repo }}
+          WAF_REPO: ${{ inputs.waf_repo }}
+          DOS_REPO: ${{ inputs.dos_repo }}
           TARGET: goreleaser
 
       - name: Push image

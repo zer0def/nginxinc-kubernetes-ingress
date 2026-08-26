@@ -98,10 +98,10 @@ Because the stages are decoupled, a transient failure in publishing or external 
 ### Reusable Build Workflows (called via `workflow_call`)
 
 | Workflow | Purpose |
-| --- | --- |
+| --- | ------------------------------------------------------------------------------------------------------------------ |
 | `build-artifacts.yml` | Orchestrates GoReleaser binary builds + multi-variant image build matrix |
 | `build-oss.yml` | Builds a single OSS image variant |
-| `build-plus.yml` | Builds a single Plus/NAP image variant |
+| `build-plus.yml` | Builds a single Plus/NAP image variant (maps `pkg-src-repo`, `pkg-src-waf`, `pkg-src-dos` to docker build args) |
 | `build-single-image.yml` | Builds a single image variant on demand (manual dispatch) |
 | `build-test-image.yml` | Builds Python e2e test image (`kic-test-image`) |
 | `setup-smoke.yml` | Sets up Kind cluster and runs smoke tests |
